@@ -99,11 +99,11 @@ def add_money():
         if response.status_code == 200:
             # Request successful, handle the response
             # ...
-            return redirect(url_for('success'))  # Replace with your desired success route
+            return redirect(url_for('add_money_confirmation'))  # Replace with your desired success route
         else:
             # Request failed, handle the error
             # ...
-            return redirect(url_for('failure'))  # Replace with your desired failure route
+            return response.text  # Replace with your desired failure route
  except:
      return traceback.format_exc() 
 @app.route('/add-money/<int:image_id>', methods=['GET'])
