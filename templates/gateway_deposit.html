@@ -41,7 +41,7 @@
 
             images.forEach((image) => {
                 const imgElement = document.createElement('img');
-                imgElement.src = `./static/${image.name}.png`;
+                imgElement.src = `./static/${image.name}.png`.replace(" .png", ".png");;
                 imgElement.alt = image.name;
 
                 // Add a click event to redirect to the '/depositi/' page with the selected ID
