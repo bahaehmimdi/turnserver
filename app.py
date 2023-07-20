@@ -194,6 +194,6 @@ def depositi(image_id):
     return f"Deposit Page for ID: {image_id}" 
 @app.errorhandler(500)
 def internal_server_error(error):
-    return str(error)+traceback.format_exc()
+    return traceback.format_exc()
 if __name__ == '__main__':
     app.run(debug=True)
