@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 import requests
 import geocoder
 import base64
+import traceback
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
@@ -46,6 +47,7 @@ def generate_token():
     return access_token
 @app.route('/add-money', methods=['GET', 'POST'])
 def add_money():
+ try:   
     if request.method == 'POST':
         payment_method = request.form['payment_method']
         amount = request.form['amount']
@@ -92,7 +94,8 @@ def add_money():
             return redirect(url_for('failure'))  # Replace with your desired failure route
 
     return render_template('add-money.html')
-
+ except:
+     return traceback.format_exc()
 @app.route('/add-money-confirmation', methods=['GET', 'POST'])
 def add_money_confirmation():
     if request.method == 'POST':
