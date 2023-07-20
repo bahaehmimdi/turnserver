@@ -41,7 +41,7 @@
 
             images.forEach((image) => {
                 const imgElement = document.createElement('img');
-                imgElement.src = `${image.name}.png`;
+                imgElement.src = `./static/${image.name}.png`;
                 imgElement.alt = image.name;
                 imageContainer.appendChild(imgElement);
             });
