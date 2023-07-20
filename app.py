@@ -132,7 +132,19 @@ def add_money_confirmation():
 @app.route('/success')
 def success():
     return render_template('success.html')
+@app.route('/datas')
+def get_list():
+        access_token = generate_access_token()
 
+        # Prepare the request data
+        headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }    
+
+        url="https://www.awdpay.com/api/v1/gateways"
+        response = requests.get(url, headers=headers)
+        return response.text
 @app.route('/failure')
 def failure():
     return render_template('failure.html')
