@@ -105,7 +105,13 @@ def add_money():
         if response.status_code == 200:
             # Request successful, handle the response
             # ...
-            return redirect(url_for('add_money_confirmation'))  # Replace with your desired success route
+            if payment_method in [17,"17",21,"21"]:
+             return redirect(url_for('add_money_confirmation'))  # Replace with your desired success route
+            else:
+             response_data=response.json()
+             redirect_url = response_data.get("redirectURL")
+             redirect_object = response_data.get("redirectObject")
+             requests.post(redirect_url, data=redirect_object)
         else:
             # Request failed, handle the error
             # ...
