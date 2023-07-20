@@ -110,9 +110,9 @@ def add_money():
              return redirect(url_for('add_money_confirmation',instructions=rs.get("instruction"), extras=rs.get('extra')))  # Replace with your desired success route
             else:
              response_data=response.json()
-             redirect_url = response_data.get("redirectURL")
-             redirect_object = response_data.get("redirectObject")
-             requests.post(redirect_url, data=redirect_object)
+             redirect_url = response_data.get("redirect")
+             
+             requests.post(redirect_url, data=response_data)
         else:
             # Request failed, handle the error
             # ...
