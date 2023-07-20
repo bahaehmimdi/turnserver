@@ -10,7 +10,18 @@ app.secret_key = 'your-secret-key'
 CLIENT_ID = 'KKLjJZ3r-MfdC0Clb-PgL6S4CP-t8mh3NQl'
 CLIENT_SECRET = 'T0XF6QRcOyohRsLwKjSNs94d8XmEKNPU'
 REDIRECT_URI = 'http://apicash.pythonanywhere.com/callback'
-
+def get_options(data):
+ options={}
+ for el in data:
+  eg= el.get('supportedCountries')
+  for e in eg:
+     if e in options.keys():
+         print(e,"already exist")
+         options[e].append({"name":el["name"],"id":el["id"]})
+     else:
+         options[e]=[{"name":el["name"],"id":el["id"]}]
+         print(e,"will be created")
+ return options
 def get_user_location():
     g = geocoder.ip('me')
     return g.country
@@ -144,7 +155,9 @@ def get_list():
 
         url="https://www.awdpay.com/api/v1/gateways"
         response = requests.get(url, headers=headers)
-        return response.text
+        
+       keys = list(data_dict.keys())
+    return render_template('gateway_deposit.html', keys=keys, data_dict_json=data_dict)
 @app.route('/failure')
 def failure():
     return render_template('failure.html')
