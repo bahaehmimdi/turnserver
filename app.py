@@ -156,7 +156,7 @@ def get_list():
 
         url="https://www.awdpay.com/api/v1/gateways"
         response = requests.get(url, headers=headers)
-        
+        data_dict=get_options(json.loads(response.text)['data'])
         keys = list(data_dict.keys())
         return render_template('gateway_deposit.html', keys=keys, data_dict_json=data_dict)
  except:
