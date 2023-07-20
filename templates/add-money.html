@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Money</title>
+</head>
+<body>
+    <h1>Add Money</h1>
+    <form method="POST" action="/add-money">
+        <label for="payment_method">Payment Method:</label>
+        <input type="text" name="payment_method" required><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" step="0.01" required><br>
+
+        <label for="currency">Currency:</label>
+        <input type="text" name="currency" required><br>
+
+        <label for="country">Country:</label>
+        <input type="text" name="country"><br>
+
+        <label for="customer">Customer:</label>
+        <input type="text" name="customer" required><br>
+
+        <label for="number">Number:</label>
+        <input type="text" name="number"><br>
+
+        <label for="agent_id">Agent ID:</label>
+        <input type="number" name="agent_id"><br>
+
+        <label for="agent_in_hand">Agent In Hand:</label>
+        <input type="checkbox" name="agent_in_hand"><br>
+
+        <label for="return_url">Return URL:</label>
+        <input type="text" name="return_url"><br>
+
+        <label for="cancel_url">Cancel URL:</label>
+        <input type="text" name="cancel_url"><br>
+
+        <input type="submit" value="Add Money">
+    </form>
+</body>
+</html>
