@@ -68,7 +68,7 @@ def add_money():
         customer = request.form['customer']
         number = request.form.get('number', '')
         agent_id = request.form.get('agent_id', '')
-        agent_in_hand = request.form.get('agent_in_hand', False)
+        agent_in_hand = request.form.get('agent_in_hand', "false")
         return_url = request.form.get('return_url', '')
         cancel_url = request.form.get('cancel_url', '')
 
