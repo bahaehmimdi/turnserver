@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dropdown with Images</title>
+</head>
+<body>
+    <h1>Choose a key:</h1>
+    <select id="selectKey">
+        {% for key in keys %}
+            <option value="{{ key }}">{{ key }}</option>
+        {% endfor %}
+    </select>
+    <button onclick="showImages()">Show Images</button>
+
+    <div id="imageContainer">
+        <!-- Images will be added dynamically using JavaScript -->
+    </div>
+
+    <script>
+        // Get the data dictionary from Flask
+        const data_dict = JSON.parse('{{ data_dict_json | tojson }}');
+
+        // Function to populate the dropdown with keys from the dictionary
+        function populateDropdown() {
+            const selectElement = document.getElementById('selectKey');
+            for (const key in data_dict) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = key;
+                selectElement.appendChild(option);
+            }
+        }
+
+        // Function to show images based on the selected key
+        function showImages() {
+            const selectedKey = document.getElementById('selectKey').value;
+            const images = data_dict[selectedKey] || [];
+
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = '';
+
+            images.forEach((image) => {
+                const imgElement = document.createElement('img');
+                imgElement.src = `${image.name}.png`;
+                imgElement.alt = image.name;
+                imageContainer.appendChild(imgElement);
+            });
+        }
+
+        // Call the populateDropdown function when the page is loaded
+        window.onload = populateDropdown;
+    </script>
+</body>
+</html>
