@@ -68,7 +68,7 @@ def add_money():
         customer = request.form['customer']
         number = request.form.get('number', '')
         agent_id = request.form.get('agent_id', '')
-        agent_in_hand = request.form.get('agent_in_hand', "false")
+        agent_in_hand = request.form.get('agent_in_hand', False)
         return_url = request.form.get('return_url', '')
         cancel_url = request.form.get('cancel_url', '')
 
@@ -87,12 +87,18 @@ def add_money():
             'country': country,
             'customer': customer,
             'number': number,
-            'agentId': agent_id,
-            'agentInHand': agent_in_hand,
+           
             'return_url': return_url,
             'cancel_url': cancel_url
         }
-
+       
+        if agent_in_hand:
+          data.update({ 'agentId': agent_id,
+            'agentInHand': agent_in_hand})
+        for k,v in data.copy().items():
+          if v=="":
+            del data[k]
+           
         # Make the API request to add money
         response = requests.post('https://www.awdpay.com/api/v1/deposits', headers=headers, data=data)
 
