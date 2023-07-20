@@ -7,7 +7,7 @@ import traceback
 import json
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
-
+app.config['DEBUG'] = True
 CLIENT_ID = 'KKLjJZ3r-MfdC0Clb-PgL6S4CP-t8mh3NQl'
 CLIENT_SECRET = 'T0XF6QRcOyohRsLwKjSNs94d8XmEKNPU'
 REDIRECT_URI = 'http://apicash.pythonanywhere.com/callback'
@@ -192,5 +192,8 @@ def bonjour():
 def depositi(image_id):
     # Do something with the image_id, for example, render a template or process the ID.
     return f"Deposit Page for ID: {image_id}" 
+@app.errorhandler(500)
+def internal_server_error(error):
+    return str(error)+traceback.format_exc()
 if __name__ == '__main__':
     app.run(debug=True)
