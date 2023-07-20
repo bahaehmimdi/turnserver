@@ -156,8 +156,8 @@ def get_list():
         url="https://www.awdpay.com/api/v1/gateways"
         response = requests.get(url, headers=headers)
         
-       keys = list(data_dict.keys())
-    return render_template('gateway_deposit.html', keys=keys, data_dict_json=data_dict)
+        keys = list(data_dict.keys())
+        return render_template('gateway_deposit.html', keys=keys, data_dict_json=data_dict)
 @app.route('/failure')
 def failure():
     return render_template('failure.html')
