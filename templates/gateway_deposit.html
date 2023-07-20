@@ -41,8 +41,14 @@
 
             images.forEach((image) => {
                 const imgElement = document.createElement('img');
-                imgElement.src = `./static/${image.name}.png`;
+                imgElement.src = `${image.name}.png`;
                 imgElement.alt = image.name;
+
+                // Add a click event to redirect to the '/depositi/' page with the selected ID
+                imgElement.addEventListener('click', () => {
+                    window.location.href = `/depositi/${image.id}`;
+                });
+
                 imageContainer.appendChild(imgElement);
             });
         }
