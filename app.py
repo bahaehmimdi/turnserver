@@ -107,7 +107,7 @@ def add_money():
             # ...
             if payment_method in [17,"17",21,"21"]:
              rs=response.json()
-             return redirect(url_for('add_money_confirmation',instructions=rs.get("instruction"), extras=rs.get('extra')))  # Replace with your desired success route
+             return redirect(url_for('add_money_confirmation',instructions=str(rs), extras=rs.get('extra')))  # Replace with your desired success route
             else:
              response_data=response.json()
              redirect_url = response_data.get("redirect")
