@@ -145,6 +145,7 @@ def success():
     return render_template('success.html')
 @app.route('/datas')
 def get_list():
+ try:
         access_token = generate_access_token()
 
         # Prepare the request data
@@ -158,6 +159,8 @@ def get_list():
         
         keys = list(data_dict.keys())
         return render_template('gateway_deposit.html', keys=keys, data_dict_json=data_dict)
+ except:
+     return traceback.format_exc()
 @app.route('/failure')
 def failure():
     return render_template('failure.html')
