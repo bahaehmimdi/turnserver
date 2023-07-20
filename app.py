@@ -57,7 +57,7 @@ def generate_token():
     access_token = generate_access_token()
 
     return access_token
-@app.route('/add-money', methods=['POST'])
+@app.route('/add-money', methods=['POST','GET'])
 def add_money():
  try:   
     if request.method == 'POST':
