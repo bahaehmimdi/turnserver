@@ -164,5 +164,9 @@ def failure():
 @app.route('/')
 def bonjour():
     return "Bonjour c est bahae el hmimdi le devlopeur"    
+@app.route('/depositi/<int:image_id>')
+def depositi(image_id):
+    # Do something with the image_id, for example, render a template or process the ID.
+    return f"Deposit Page for ID: {image_id}" 
 if __name__ == '__main__':
     app.run(debug=True)
