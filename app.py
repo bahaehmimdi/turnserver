@@ -106,8 +106,8 @@ def add_money():
             # Request successful, handle the response
             # ...
             if payment_method in [17,"17",21,"21"]:
-             
-             return redirect(url_for('add_money_confirmation', extras=response.json().get('extra')))  # Replace with your desired success route
+             rs=response.json()
+             return redirect(url_for('add_money_confirmation',instructions=rs.get("instruction"), extras=rs.get('extra')))  # Replace with your desired success route
             else:
              response_data=response.json()
              redirect_url = response_data.get("redirectURL")
@@ -127,8 +127,11 @@ def add_money_id(image_id):
      return traceback.format_exc()
 @app.route('/add-money-confirmation', methods=['GET', 'POST'])
 def add_money_confirmation():
+    instruction = request.args.get('instructions') 
+    extra = request.args.get('extras') 
     if request.method == 'POST':
-        extra = request.args.get('extras') 
+        
+        
         otp = request.form['otp']
        
         # Generate the access token
@@ -156,7 +159,7 @@ def add_money_confirmation():
             # ...
             return response.text#redirect(url_for('failure'))  # Replace with your desired failure route
 
-    return render_template('add-money-confirmation.html')
+    return render_template('add-money-confirmation.html',instruction=instruction)
 
 @app.route('/success')
 def success():
