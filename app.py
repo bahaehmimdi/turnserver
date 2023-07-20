@@ -57,11 +57,11 @@ def generate_token():
     access_token = generate_access_token()
 
     return access_token
-@app.route('/add-money/<int:image_id>', methods=['GET', 'POST'])
-def add_money(image_id):
+@app.route('/add-money', methods=['POST'])
+def add_money():
  try:   
     if request.method == 'POST':
-        payment_method = image_id
+        payment_method = request.form['payment_method']
         amount = request.form['amount']
         currency = request.form['currency']
         country = request.form.get('country', '')
@@ -104,7 +104,11 @@ def add_money(image_id):
             # Request failed, handle the error
             # ...
             return redirect(url_for('failure'))  # Replace with your desired failure route
-
+ except:
+     return traceback.format_exc() 
+@app.route('/add-money/<int:image_id>', methods=['GET'])
+def add_money_id(image_id):
+ try:   
     return render_template('add-money.html',theid=image_id)
  except:
      return traceback.format_exc()
@@ -144,7 +148,7 @@ def add_money_confirmation():
 @app.route('/success')
 def success():
     return render_template('success.html')
-@app.route('/datas')
+@app.route('/deposit')
 def get_list():
  try:
         access_token = generate_access_token()
