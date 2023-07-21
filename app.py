@@ -123,7 +123,7 @@ def add_money():
         else:
             # Request failed, handle the error
             # ...
-            return response.text+"--"+str(data)  # Replace with your desired failure route
+            return response.text+"--"+str(data)+"++"+str(response_data)  # Replace with your desired failure route
  except:
      return traceback.format_exc() 
 @app.route('/add-money/<int:image_id>', methods=['GET'])
