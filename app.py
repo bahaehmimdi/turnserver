@@ -110,9 +110,16 @@ def add_money():
              return redirect(url_for('add_money_confirmation',instructions=str(rs), extras=rs.get('extra')))  # Replace with your desired success route
             else:
              response_data=response.json()
-             redirect_url = response_data.get("redirect")
-             
-             return str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
+           #  redirect_url = response_data.get("redirect")
+              headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+             data = {
+            'extra': response_data.get('extra')}
+        # Make the API request to confirm the deposit
+            response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
+            return response.text#str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
         else:
             # Request failed, handle the error
             # ...
