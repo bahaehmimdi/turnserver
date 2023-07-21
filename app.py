@@ -112,7 +112,7 @@ def add_money():
              response_data=response.json()
              redirect_url = response_data.get("redirect")
              
-             return requests.post(redirect_url, data=response_data).text
+             return redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
         else:
             # Request failed, handle the error
             # ...
