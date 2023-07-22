@@ -434,5 +434,18 @@ def info(id):
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     return  requests.get('https://www.awdpay.com/api/v1/deposits/'+id, headers=headers).text    
+@app.route('/methods')
+def get_methods():
+ try:
+        access_token = generate_access_token()
+
+        # Prepare the request data
+        headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }    
+
+        url="https://www.awdpay.com/api/v1/methods"
+        response = requests.get(url, headers=headers)    
 if __name__ == '__main__':
     app.run(debug=True)
