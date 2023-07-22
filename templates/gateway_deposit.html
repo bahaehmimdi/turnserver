@@ -46,7 +46,9 @@
 
                 // Add a click event to redirect to the '/depositi/' page with the selected ID
                 imgElement.addEventListener('click', () => {
-                    window.location.href = `/add-money/${image.id}`;
+
+                    var country=document.getElementById('selectKey').value;
+                    window.location.href = `/add-money/${image.id}-${country}`;
                 });
 
                 imageContainer.appendChild(imgElement);
