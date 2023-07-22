@@ -204,6 +204,7 @@ def failure():
     return render_template('failure.html')
 @app.route('/last')
 def lastc():
+ try:
     # Generate the access token
     access_token = generate_access_token()
 
@@ -213,6 +214,8 @@ def lastc():
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     return  requests.post(' https://www.awdpay.com/api/v1/deposits/'+str(last[-1]), headers=headers).text
+ except: 
+  return traceback.format_exc() 
 @app.route('/')
 def bonjour():
     return "Bonjour c est bahae el hmimdi le devlopeur"    
@@ -220,8 +223,6 @@ def bonjour():
 def depositi(image_id):
     # Do something with the image_id, for example, render a template or process the ID.
     return f"Deposit Page for ID: {image_id}" 
-@app.errorhandler(Exception)
-def internal_server_error(error):
-    return str(error)
+
 if __name__ == '__main__':
     app.run(debug=True)
