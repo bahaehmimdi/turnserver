@@ -448,6 +448,6 @@ def get_methods():
         url="https://www.awdpay.com/api/v1/methods"
         response = requests.get(url, headers=headers)  
  except: 
-  return traceback.format_exc() 
+  return str(traceback.format_exc() )
 if __name__ == '__main__':
     app.run(debug=True)
