@@ -193,6 +193,13 @@ iso_to_dialing_code = {
     'YE': '+967',  # Yemen
     'ZM': '+260',  # Zambia
     'ZW': '+263',  # Zimbabwe
+    'SN': '+221',  # Senegal
+    'CI': '+225',  # Ivory Coast/Côte d'Ivoire
+    'BF': '+226',  # Burkina Faso
+    'BJ': '+229',  # Benin
+    'GN': '+224',  # Guinea
+    'ML': '+223',  # Mali
+    'TG': '+228'   # Togo
 }
 
 app = Flask(__name__)
