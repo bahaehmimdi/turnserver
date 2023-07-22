@@ -373,7 +373,7 @@ def add_money_confirmation():
         else:
             # Request failed, handle the error
             # ...
-            return response.text+#redirect(url_for('failure'))  # Replace with your desired failure route
+            return response.text+"--"+str(response.json())#redirect(url_for('failure'))  # Replace with your desired failure route
 
     return render_template('add-money-confirmation.html',instruction=instruction,extra=extra)
 
