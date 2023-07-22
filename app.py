@@ -213,7 +213,7 @@ def lastc():
             'Authorization': 'Bearer ' + access_token,
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    return  requests.post(' https://www.awdpay.com/api/v1/deposits/'+str(last[-1]), headers=headers).text
+    return  requests.get('https://www.awdpay.com/api/v1/deposits/'+str(last[-1]), headers=headers).text
  except: 
   return traceback.format_exc() 
 @app.route('/')
