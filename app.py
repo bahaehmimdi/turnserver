@@ -367,7 +367,8 @@ def add_money_confirmation():
 
         if response.status_code == 200:
             # Request successful, handle the response
-            # ...
+            last.clear()
+            last.append(id)
             return redirect(url_for('success'))  # Replace with your desired success route
         else:
             # Request failed, handle the error
@@ -421,6 +422,15 @@ def bonjour():
 def depositi(image_id):
     # Do something with the image_id, for example, render a template or process the ID.
     return f"Deposit Page for ID: {image_id}" 
+@app.route('/info/<string:id>')
+def info(id):
+    access_token = generate_access_token()
 
+        # Prepare the request data
+    headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    return  requests.get('https://www.awdpay.com/api/v1/deposits/'+id, headers=headers).text    
 if __name__ == '__main__':
     app.run(debug=True)
