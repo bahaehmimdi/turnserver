@@ -450,5 +450,23 @@ def get_methods():
         return response.text
  except: 
   return str(traceback.format_exc() )
+@app.route('/withrawit')
+def get_list2():
+ try:
+        access_token = generate_access_token()
+
+        # Prepare the request data
+        headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }    
+
+        url="https://www.awdpay.com/api/v1/methods"
+        response = requests.get(url, headers=headers)
+        data_dict=get_options(json.loads(response.text)['data'])
+        keys = list(data_dict.keys())
+        return render_template('gateway_withdraw.html', keys=keys, data_dict_json=data_dict)
+ except:
+     return traceback.format_exc()     
 if __name__ == '__main__':
     app.run(debug=True)
