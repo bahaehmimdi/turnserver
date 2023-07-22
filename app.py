@@ -263,7 +263,9 @@ def add_money():
         currency = request.form['currency']
         country = request.form.get('country', '')
         customer = request.form['customer']
-        number = request.form.get('iso', '')+request.form.get('number', '')
+        number = request.form.get('number', '')
+        if payment_method in [12,"12"]:
+         number=request.form.get('iso', '')+number
         agent_id = request.form.get('agent_id', '')
         agent_in_hand = request.form.get('agent_in_hand', False)
         return_url = request.form.get('return_url', '')
