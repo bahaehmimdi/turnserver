@@ -5,6 +5,7 @@ import geocoder
 import base64
 import traceback
 import json
+last=[]
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 app.config['DEBUG'] = True
@@ -116,11 +117,19 @@ def add_money():
             'Authorization': 'Bearer ' + access_token,
             'Content-Type': 'application/x-www-form-urlencoded'
         }
+             rg=response_data.get('extra')
              data = {
-            'extra': response_data.get('extra')}
+            'extra': rg}
         # Make the API request to confirm the deposit
-            response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
-            return response.text+"--"+tex+"++"+str(response_data) #str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
+             if rg:
+              response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
+              return response.text+"--"+tex+"++"+str(response_data) #str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
+             else:
+              id=response_data.get('id')
+              last.clear()
+              last.append(id)
+              
+              redirect(url_for('lastc')) 
         else:
             # Request failed, handle the error
             # ...
@@ -192,6 +201,9 @@ def get_list():
      return traceback.format_exc()
 @app.route('/failure')
 def failure():
+    return render_template('failure.html')
+@app.route('/last')
+def lastc():
     return render_template('failure.html')
 @app.route('/')
 def bonjour():
