@@ -346,7 +346,7 @@ def add_money_confirmation():
     extra = request.args.get('extras') 
     if request.method == 'POST':
         
-        
+        extra = request.form['extra']
         otp = request.form['otp']
        
         # Generate the access token
@@ -373,9 +373,9 @@ def add_money_confirmation():
         else:
             # Request failed, handle the error
             # ...
-            return response.text#redirect(url_for('failure'))  # Replace with your desired failure route
+            return response.text+#redirect(url_for('failure'))  # Replace with your desired failure route
 
-    return render_template('add-money-confirmation.html',instruction=instruction)
+    return render_template('add-money-confirmation.html',instruction=instruction,extra=extra)
 
 @app.route('/success')
 def success():
