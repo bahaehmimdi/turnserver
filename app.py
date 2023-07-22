@@ -338,7 +338,7 @@ def add_money():
 def add_money_id(dts):
  try:   
     image_id,iso=dts.split("-")
-    dc=iso_to_dialing_code[iso]
+    dc=iso_to_dialing_code[iso].replace("+","")
     return render_template('add-money.html',theid=int(image_id),iso=iso,dc=dc)
  except:
      return traceback.format_exc()
