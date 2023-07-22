@@ -129,7 +129,7 @@ def add_money():
               last.clear()
               last.append(id)
               
-              redirect(url_for('lastc')) 
+              return redirect(url_for('lastc')) 
         else:
             # Request failed, handle the error
             # ...
