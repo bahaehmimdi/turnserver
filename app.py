@@ -336,7 +336,7 @@ def add_money():
  except:
      return traceback.format_exc() 
 @app.route('/add-money/<string:dts>', methods=['GET'])
-def add_money_id(dts):
+def withdraw_money_id(dts):
  try:   
     image_id,iso=dts.split("-")
     dc=iso_to_dialing_code[iso].replace("+","")
@@ -502,7 +502,7 @@ def get_list2():
  except:
      return traceback.format_exc() 
 @app.route('/withdraw-money', methods=['POST','GET'])
-def add_money():
+def withdraw_money():
  try:   
     if request.method == 'POST':
         payment_method = request.form['methodId']
