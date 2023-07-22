@@ -342,6 +342,14 @@ def add_money_id(dts):
     return render_template('add-money.html',theid=int(image_id),iso=iso,dc=dc)
  except:
      return traceback.format_exc()
+@app.route('/withdraw-money/<string:dts>', methods=['GET'])
+def withraw_money_id(dts):
+ try:   
+    image_id,iso=dts.split("-")
+    dc=iso_to_dialing_code[iso].replace("+","")
+    return render_template('withdraw-money.html',theid=int(image_id),iso=iso,dc=dc)
+ except:
+     return traceback.format_exc()     
 @app.route('/add-money-confirmation', methods=['GET', 'POST'])
 def add_money_confirmation():
     instruction = request.args.get('instructions') 
@@ -467,6 +475,82 @@ def get_list2():
         keys = list(data_dict.keys())
         return render_template('gateway_withdraw.html', keys=keys, data_dict_json=data_dict)
  except:
-     return traceback.format_exc()     
+     return traceback.format_exc() 
+@app.route('/withdraw-money', methods=['POST','GET'])
+def add_money():
+ try:   
+    if request.method == 'POST':
+        payment_method = request.form['methodId']
+        amount = request.form['amount']
+        currency = request.form['currency']
+        country = request.form.get('country', '')
+        customer = request.form['customer']
+        number = request.form.get('number', '')
+        if payment_method in [12,"12"]:
+         number=request.form.get('iso', '')+number
+        extWallet = request.form.get('extWallet', '')
+
+
+        # Generate the access token
+        access_token = generate_access_token()
+
+        # Prepare the request data
+        headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        data = {
+            'payment_method': methodId,
+            'amount': amount,
+            'currency': currency,
+            'country': country,
+            'customer': customer,
+            'number': number,
+           
+            'return_url': return_url,
+            'extWallet': extWallet
+        }
+       
+
+        for k,v in data.copy().items():
+          if v=="":
+            del data[k]
+           
+        # Make the API request to add money
+        response = requests.post('https://www.awdpay.com/api/v1/deposits', headers=headers, data=data)
+
+        if response.status_code == 200:
+            # Request successful, handle the response
+            # ...
+            if payment_method in [17,"17"]:
+             rs=response.json()
+             return redirect(url_for('add_money_confirmation',instructions=str(rs), extras=rs.get('extra')))  # Replace with your desired success route
+            else:
+             response_data=response.json()
+             tex=response.text
+           #  redirect_url = response_data.get("redirect")
+             headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+             rg=response_data.get('extra')
+             data = {
+            'extra': rg}
+        # Make the API request to confirm the deposit
+             if rg:
+              response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
+              return response.text+"--"+tex+"++"+str(response_data) #str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
+             else:
+              id=response_data.get('id')
+              last.clear()
+              last.append(id)
+              
+              return redirect(url_for('lastc')) 
+        else:
+            # Request failed, handle the error
+            # ...
+            return response.text+"--"+str(data)+"++"+str(response.json())  # Replace with your desired failure route
+ except:
+     return traceback.format_exc()      
 if __name__ == '__main__':
     app.run(debug=True)
