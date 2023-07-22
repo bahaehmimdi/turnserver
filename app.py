@@ -6,6 +6,7 @@ import base64
 import traceback
 import json
 last=[]
+last2=[]
 iso_to_dialing_code = {
     'AF': '+93',  # Afghanistan
     'AL': '+355',  # Albania
@@ -425,6 +426,20 @@ def lastc():
     return  requests.get('https://www.awdpay.com/api/v1/deposits/'+str(last[-1]), headers=headers).text
  except: 
   return traceback.format_exc() 
+@app.route('/last2')
+def lastb():
+ try:
+    # Generate the access token
+    access_token = generate_access_token()
+
+        # Prepare the request data
+    headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    return  requests.get('https://www.awdpay.com/api/v1/withdraws/'+str(last2[-1]), headers=headers).text
+ except: 
+  return traceback.format_exc()      
 @app.route('/')
 def bonjour():
     return "Bonjour c est bahae el hmimdi le devlopeur"    
@@ -441,7 +456,17 @@ def info(id):
             'Authorization': 'Bearer ' + access_token,
             'Content-Type': 'application/x-www-form-urlencoded'
         }
-    return  requests.get('https://www.awdpay.com/api/v1/deposits/'+id, headers=headers).text    
+    return  requests.get('https://www.awdpay.com/api/v1/deposits/'+id, headers=headers).text  
+@app.route('/info2/<string:id>')
+def info2(id):
+    access_token = generate_access_token()
+
+        # Prepare the request data
+    headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    return  requests.get('https://www.awdpay.com/api/v1/withdraws/'+id, headers=headers).text      
 @app.route('/methods')
 def get_methods():
  try:
@@ -486,7 +511,7 @@ def add_money():
         country = request.form.get('country', '')
         customer = request.form['customer']
         number = request.form.get('number', '')
-        if payment_method in [12,"12"]:
+        if payment_method in [[29,"29","31",31]:
          number=request.form.get('iso', '')+number
         extWallet = request.form.get('extWallet', '')
 
@@ -507,7 +532,6 @@ def add_money():
             'customer': customer,
             'number': number,
            
-            'return_url': return_url,
             'extWallet': extWallet
         }
        
@@ -517,15 +541,12 @@ def add_money():
             del data[k]
            
         # Make the API request to add money
-        response = requests.post('https://www.awdpay.com/api/v1/deposits', headers=headers, data=data)
+        response = requests.post('https://www.awdpay.com/api/v1/withdraws', headers=headers, data=data)
 
         if response.status_code == 200:
             # Request successful, handle the response
             # ...
-            if payment_method in [17,"17"]:
-             rs=response.json()
-             return redirect(url_for('add_money_confirmation',instructions=str(rs), extras=rs.get('extra')))  # Replace with your desired success route
-            else:
+
              response_data=response.json()
              tex=response.text
            #  redirect_url = response_data.get("redirect")
@@ -537,15 +558,15 @@ def add_money():
              data = {
             'extra': rg}
         # Make the API request to confirm the deposit
-             if rg:
-              response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
-              return response.text+"--"+tex+"++"+str(response_data) #str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
-             else:
+             if True:# rg:
+            #  response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
+           #   return response.text+"--"+tex+"++"+str(response_data) #str(response_data)#redirect(redirect_url)#requests.post(redirect_url, data=response_data).text
+          #   else:
               id=response_data.get('id')
-              last.clear()
-              last.append(id)
+              last2.clear()
+              last2.append(id)
               
-              return redirect(url_for('lastc')) 
+              return redirect(url_for('lastb')) 
         else:
             # Request failed, handle the error
             # ...
