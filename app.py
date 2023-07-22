@@ -304,7 +304,7 @@ def add_money():
         if response.status_code == 200:
             # Request successful, handle the response
             # ...
-            if payment_method in [17,"17",21,"21"]:
+            if payment_method in [17,"17"]:
              rs=response.json()
              return redirect(url_for('add_money_confirmation',instructions=str(rs), extras=rs.get('extra')))  # Replace with your desired success route
             else:
@@ -363,7 +363,7 @@ def add_money_confirmation():
             'extra': extra,
             'otp': otp
         }
-
+        
         # Make the API request to confirm the deposit
         response = requests.post('https://www.awdpay.com/api/v1/deposits/confirm', headers=headers, data=data)
 
