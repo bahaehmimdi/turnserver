@@ -511,7 +511,7 @@ def add_money():
         country = request.form.get('country', '')
         customer = request.form['customer']
         number = request.form.get('number', '')
-        if payment_method in [[29,"29","31",31]:
+        if payment_method in [29,"29","31",31]:
          number=request.form.get('iso', '')+number
         extWallet = request.form.get('extWallet', '')
 
