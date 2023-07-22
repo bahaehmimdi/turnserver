@@ -204,7 +204,16 @@ def failure():
     return render_template('failure.html')
 @app.route('/last')
 def lastc():
-    return render_template('failure.html')
+    # Generate the access token
+    access_token = generate_access_token()
+
+        # Prepare the request data
+    headers = {
+            'Authorization': 'Bearer ' + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    
+    return response = requests.post(' https://www.awdpay.com/api/v1/deposits/'+str(last[-1]), headers=headers).text
 @app.route('/')
 def bonjour():
     return "Bonjour c est bahae el hmimdi le devlopeur"    
