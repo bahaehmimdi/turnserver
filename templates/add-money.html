@@ -2,6 +2,17 @@
 <html>
 <head>
     <title>Add Money</title>
+     <style>
+        /* CSS to display "Number" and "ISO" inputs on the same line */
+        .input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container input {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Add Money</h1>
@@ -23,10 +34,11 @@
 
         <label for="customer">Customer:</label>
         <input type="text" name="customer" value="" required><br>
-
-        <label for="number">Number:</label> <input type="text"  size="3"  maxlength="3"  readonly name="iso" value="{{dc}}"><br>
-        <input type="text" name="number" maxlength="10" value=""><br>
-
+  <div class="input-container">
+            <label for="number">Number:</label>
+            <input type="text" size="3" maxlength="3" readonly name="iso" value="{{dc}}">
+            <input type="text" name="number" maxlength="10" value="">
+        </div>
         <label for="agent_id">Agent ID:</label>
         <input type="number" name="agent_id"><br>
 
