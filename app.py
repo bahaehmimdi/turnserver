@@ -209,6 +209,22 @@ app.config['DEBUG'] = True
 CLIENT_ID = 'KKLjJZ3r-MfdC0Clb-PgL6S4CP-t8mh3NQl'
 CLIENT_SECRET = 'T0XF6QRcOyohRsLwKjSNs94d8XmEKNPU'
 REDIRECT_URI = 'http://apicash.pythonanywhere.com/callback'
+def get_options2(data):
+ options={}
+ for el in data:
+     
+  if el:   
+   eg= el.get('country')
+   if eg:
+    for e in eg:
+     if e:   
+      if e in options.keys():
+         print(e,"already exist")
+         options[e].append({"name":el["name"],"id":el["id"]})
+      else:
+         options[e]=[{"name":el["name"],"id":el["id"]}]
+         print(e,"will be created")
+ return options  
 def get_options(data):
  options={}
  for el in data:
@@ -496,7 +512,7 @@ def get_list2():
 
         url="https://www.awdpay.com/api/v1/methods"
         response = requests.get(url, headers=headers)
-        data_dict=get_options(json.loads(response.text)['data'])
+        data_dict=get_options2(json.loads(response.text)['data'])
         keys = list(data_dict.keys())
         return render_template('gateway_withdraw.html', keys=keys, data_dict_json=data_dict)
  except:
