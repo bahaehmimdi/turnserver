@@ -589,5 +589,55 @@ def withdraw_money():
             return response.text+"--"+str(data)+"++"+str(response.json())  # Replace with your desired failure route
  except:
      return traceback.format_exc()      
+@app.route('/transfer', methods=['GET', 'POST'])
+def transfer_money():
+    if request.method == 'GET':
+        return render_template('transfer_form.html')
+    elif request.method == 'POST':
+        try:
+            # Generate the access token
+            
+            access_token =  generate_access_token()
+            if not access_token:
+                return jsonify({"error": "Failed to generate access token."}), 500
+
+            # Extract data from the incoming JSON request
+            transaction_type = request.form.get('type')
+            wallet = request.form.get('wallet')
+            email = request.form.get('email')
+            amount = request.form.get('amount')
+            currency = request.form.get('currency')
+
+            # Check if all mandatory fields are provided
+            if not transaction_type or not amount or not currency:
+                return jsonify({"error": "Mandatory fields (type, amount, currency) are required."}), 400
+
+            # Construct the payload
+            payload = {
+                "type": transaction_type,
+                "amount": amount,
+                "currency": currency
+            }
+
+            if wallet:
+                payload["wallet"] = wallet
+            elif email:
+                payload["email"] = email
+            else:
+                return jsonify({"error": "Either 'wallet' or 'email' must be provided."}), 400
+
+            # Make the API request with the access token
+            headers = {"Authorization": "Bearer " + access_token}
+            response = requests.post(API_BASE_URL, json=payload, headers=headers)
+
+            # Process the response
+            if response.status_code == 200:
+                return jsonify(response.json()), 200
+            else:
+                return jsonify({"error": "An error occurred while processing the request."}), 500
+
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+     
 if __name__ == '__main__':
     app.run(debug=True)
