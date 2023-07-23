@@ -216,7 +216,7 @@ def get_options2(data):
   if el:   
    eg= el.get('country')
    if eg:
-    for e in eg:
+    for e in [eg]:
      if e:   
       if e in options.keys():
          print(e,"already exist")
