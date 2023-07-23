@@ -18,7 +18,7 @@
 
     <script>
         // Get the data dictionary from Flask
-        const data_dict = JSON.parse('{{ data_dict_json | tojson }}');
+        let data_dict = JSON.parse('{{ data_dict_json | tojson }}');
 
         // Function to populate the dropdown with keys from the dictionary
         function populateDropdown() {
