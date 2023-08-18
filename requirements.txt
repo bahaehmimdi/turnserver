@@ -8,3 +8,4 @@ geocoder
 requests
 Flask-SocketIO
 eventlet
+Werkzeug
