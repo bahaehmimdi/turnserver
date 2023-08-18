@@ -6,3 +6,5 @@ itsdangerous==0.24
 gunicorn
 geocoder
 requests
+Flask-SocketIO
+eventlet
