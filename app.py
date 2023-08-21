@@ -1,23 +1,22 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO, emit
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-@app.route('/caller')
-def caller():
-    return render_template('caller.html')
+locations = []  # List to store locations
 
-@app.route('/receiver')
-def receiver():
-    return render_template('receiver.html')
+@app.route('/save_location', methods=['POST'])
+def save_location():
+    data = request.json
+    latitude = data.get('latitude')
+    longitude = data.get('longitude')
+    
+    locations.append({"latitude": latitude, "longitude": longitude})
+    
+    return jsonify({"message": "Location saved successfully!"})
 
-@socketio.on('signal')
-def handle_signal(data):
-    emit('signal', data, broadcast=True, include_self=False)
+@app.route('/get_locations', methods=['GET'])
+def get_locations():
+    return jsonify(locations)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    app.run(debug=True)
